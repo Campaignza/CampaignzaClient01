@@ -14,7 +14,8 @@ export class Review {
   ];
 
   readonly googleReviewUrl =
-    'https://www.google.com/search?q=YOUR_BRAND_NAME+reviews';
+    // 'https://www.google.com/search?q=YOUR_BRAND_NAME+reviews';
+    'https://www.google.com/search?q=Priyadarshani Training Center+reviews';
 
   currentOption = 0;
   copied = false;
