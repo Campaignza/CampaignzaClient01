@@ -20,6 +20,24 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
+.brand-logo {
+  width: 76px;
+  height: 76px;
+  margin-bottom: 18px;
+  border: 1px solid #3b4654;
+  border-radius: 18px;
+  object-fit: cover;
+}
+
+.loading-card,
+.error-card {
+  color: #c9d1d9;
+}
+
+.error-card {
+  color: #f2cc60;
+}
+
 h2 {
   margin: 0 0 10px;
   color: #ffffff;

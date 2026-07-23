@@ -1,7 +1,15 @@
+@if (loading()) {
+    <div class="card loading-card">Loading...</div>
+} @else if (error()) {
+    <div class="card error-card">{{ error() }}</div>
+} @else if (brand(); as currentBrand) {
 <div class="card">
+    @if (currentBrand.brand_photo_url) {
+        <img class="brand-logo" [src]="currentBrand.brand_photo_url" [alt]="currentBrand.brand_name + ' logo'" />
+    }
 
     <!-- Trust Indicators -->
-    <h2>Welcome!</h2>
+    <h2>Welcome to {{ currentBrand.brand_name }}!</h2>
     <p>Tap the button below to connect
         with our official business team instantly.</p>
 
@@ -11,3 +19,4 @@
     </a>
 
 </div>
+}

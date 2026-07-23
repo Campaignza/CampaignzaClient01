@@ -34,6 +34,16 @@
   object-fit: cover;
 }
 
+.loading-card,
+.error-card {
+  color: #c9d1d9;
+}
+
+.error-card,
+.error-message {
+  color: #f2cc60;
+}
+
 .eyebrow {
   margin: 0 0 8px;
   color: #56d364;
@@ -80,6 +90,28 @@ h1 {
   color: #f0f6fc;
   font-size: 16px;
   line-height: 1.65;
+}
+
+.language-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.language-navigation button {
+  padding: 8px 12px;
+  color: #a8b2bf;
+  background: transparent;
+  border: 1px solid #3b4654;
+  border-radius: 8px;
+}
+
+.language-navigation button.active,
+.language-navigation button:hover {
+  color: #ffffff;
+  background: #263342;
+  border-color: #56d364;
 }
 
 .option-navigation {
