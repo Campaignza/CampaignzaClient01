@@ -1,0 +1,44 @@
+<main class="review-page">
+  <section class="review-card" aria-labelledby="page-title">
+    <img class="brand-logo" src="favicon.ico" alt="Brand logo" />
+
+    <p class="eyebrow">YOUR FEEDBACK MATTERS</p>
+    <h1 id="page-title">Review Suggestion</h1>
+    <p class="intro">
+      We appreciate your time. Choose a review suggestion below, copy it, and
+      share your honest experience with us on Google.
+    </p>
+
+    <div class="review-box" aria-live="polite">
+      <p>{{ currentReview }}</p>
+    </div>
+
+    <div class="option-navigation" aria-label="Review suggestion navigation">
+      <button type="button" class="secondary-button" (click)="showPrevious()" [disabled]="currentOption === 0">
+        Previous
+      </button>
+      <span>Option {{ currentOption + 1 }} of {{ reviewOptions.length }}</span>
+      <button type="button" class="secondary-button" (click)="showNext()" [disabled]="currentOption === reviewOptions.length - 1">
+        Next
+      </button>
+    </div>
+
+    <button type="button" class="primary-button" (click)="copyAndContinue()">
+      {{ copied ? 'Copied — Continue to Google' : 'Copy and Continue' }}
+    </button>
+
+    @if (copyError) {
+      <p class="status-message error-message">
+        Copying was blocked by your browser, but you can still continue and paste the text manually.
+      </p>
+    } @else {
+      <p class="status-message">
+        After Google opens, paste the copied text into the review box and submit only if it reflects your genuine experience.
+      </p>
+    }
+
+    <p class="privacy-note">
+      Your feedback helps other customers make informed decisions and helps us improve our service.
+    </p>
+  </section>
+</main>
