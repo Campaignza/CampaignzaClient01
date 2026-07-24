@@ -35,13 +35,16 @@ jobs:
       - name: Build Angular app
         run: npm run build -- --base-href /CampaignzaClient01/
 
+      - name: Verify Pages entry file
+        run: test -f dist/CampaignzaClient01/browser/index.html
+
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v4
         with:
-          path: dist/CampaignzaClient01
+          path: dist/CampaignzaClient01/browser
 
   deploy:
     environment:
