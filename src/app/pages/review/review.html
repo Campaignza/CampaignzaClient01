@@ -1,52 +1,75 @@
 @if (loading()) {
-  <main class="review-page"><section class="review-card loading-card">Loading brand data...</section></main>
+<main class="review-page">
+  <section class="review-card loading-card">Loading brand data...</section>
+</main>
 } @else if (error()) {
-  <main class="review-page"><section class="review-card error-card">{{ error() }}</section></main>
+<main class="review-page">
+  <section class="review-card error-card">{{ error() }}</section>
+</main>
 } @else if (brand(); as currentBrand) {
-  <main class="review-page">
-    <section class="review-card" aria-labelledby="page-title">
-      @if (currentBrand.brand_photo_url) {
-        <img class="brand-logo" [src]="currentBrand.brand_photo_url" [alt]="currentBrand.brand_name + ' logo'" />
-      }
+<main class="review-page">
+  <section class="review-card" aria-labelledby="page-title">
+    @if (currentBrand.brand_photo_url) {
+    <img class="brand-logo" [src]="currentBrand.brand_photo_url" [alt]="currentBrand.brand_name + ' logo'" />
+    }
 
-      <p class="eyebrow">YOUR FEEDBACK MATTERS</p>
-      <h1 id="page-title">{{ currentBrand.brand_name }} Review Suggestion</h1>
-      <p class="intro">
-        We appreciate your time. Choose a review suggestion below, copy it, and
-        share your honest experience with {{ currentBrand.brand_name }} on Google.
-      </p>
+    <p class="eyebrow">STEP 1 OF 2 · BEFORE GOOGLE</p>
+    <h1 id="page-title">Prepare Your Google Review</h1>
 
-      <div class="language-navigation" aria-label="Review language">
-        <button type="button" [class.active]="language() === 'en'" (click)="selectLanguage('en')">English</button>
-        <button type="button" [class.active]="language() === 'hi'" (click)="selectLanguage('hi')">हिन्दी</button>
-        <button type="button" [class.active]="language() === 'mr'" (click)="selectLanguage('mr')">मराठी</button>
-      </div>
+    <div class="language-navigation" aria-label="Question language">
+      <button type="button" [class.active]="language() === 'en'" (click)="selectLanguage('en')">English</button>
+      <button type="button" [class.active]="language() === 'hi'" (click)="selectLanguage('hi')">हिन्दी</button>
+      <button type="button" [class.active]="language() === 'mr'" (click)="selectLanguage('mr')">मराठी</button>
+    </div>
 
-      @if (reviewOptions().length) {
-        <div class="review-box" aria-live="polite">
-          <p>{{ currentReview }}</p>
-        </div>
+    @if (questions().length) {
+    <div class="question-panel" aria-live="polite">
+      <span class="question-label">QUESTION {{ questionPosition() + 1 }} OF {{ questions().length }}</span>
+      <p>{{ currentQuestion() }}</p>
+    </div>
 
-        <div class="option-navigation" aria-label="Review suggestion navigation">
-          <button type="button" class="secondary-button" (click)="showPrevious()" [disabled]="currentOption() === 0">Previous</button>
-          <span>Option {{ currentOption() + 1 }} of {{ reviewOptions().length }}</span>
-          <button type="button" class="secondary-button" (click)="showNext()" [disabled]="currentOption() === reviewOptions().length - 1">Next</button>
-        </div>
+    <div class="option-navigation" aria-label="Question navigation">
+      <button type="button" class="secondary-button" (click)="showPrevious()"
+        [disabled]="questionPosition() === 0">Previous</button>
+      <span>Question {{ questionPosition() + 1 }}</span>
+      <button type="button" class="secondary-button" (click)="showNext()"
+        [disabled]="questionPosition() === questions().length - 1">Next</button>
+    </div>
 
-        <button type="button" class="primary-button" (click)="copyAndContinue()">
-          {{ copied() ? 'Copied — Continue to Google' : 'Copy and Continue' }}
-        </button>
-      } @else {
-        <p class="status-message error-message">No review suggestions are available in this language.</p>
-      }
+    <button type="button" class="speak-button" [class.listening]="isListening()" (click)="toggleSpeech()">
+      <span aria-hidden="true">{{ isListening() ? '■' : '🎙' }}</span>
+      {{ isListening() ? 'Stop Listening' : 'Speak Your Answer' }}
+    </button>
 
-      @if (copyError()) {
-        <p class="status-message error-message">Copying was blocked by your browser, but you can still continue and paste the text manually.</p>
-      } @else {
-        <p class="status-message">After Google opens, paste the copied text into the review box and submit only if it reflects your genuine experience.</p>
-      }
+    <p class="speech-message" aria-live="polite">{{ speechMessage() }}</p>
 
-      <p class="privacy-note">Your feedback helps other customers make informed decisions and helps us improve our service.</p>
-    </section>
-  </main>
+    <label class="answer-label" for="answer">Your answers</label>
+    <textarea id="answer" class="answer-box" [value]="answerText()" (input)="updateAnswer($event)"
+      placeholder="Your spoken answers will appear here. You can edit them before continuing."></textarea>
+
+    <button type="button" class="primary-button" [disabled]="!answerText().trim()" (click)="copyAndContinue()">
+      {{ copied() ? 'Copied — Opening Google' : 'Copy Answer & Open Google Reviews' }}
+    </button>
+    } @else {
+    <p class="status-message error-message">No questions are available in this language.</p>
+    }
+
+    <p></p>
+
+    <p class="intro">
+      This is a short preparation step, not the Google review page. Answer a few simple questions about your experience
+      with {{ currentBrand.brand_name }}. When you continue, we will open the official Google review page for you.
+    </p>
+
+    @if (copyError()) {
+    <p class="status-message error-message">Please enter or speak an answer before continuing. If copying is blocked,
+      you can still copy the text manually.</p>
+    }
+
+    <p class="privacy-note">
+      Review your answer before continuing. The next page will be Google’s official review page, where you can paste and
+      submit your feedback only if it reflects your genuine experience.
+    </p>
+  </section>
+</main>
 }
